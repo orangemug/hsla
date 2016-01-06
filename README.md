@@ -44,6 +44,7 @@ Chain ending functions
 
 ```js
 var hsla = require("hsla");
+
 var color = hsla(120, 100, 50, 1) // green;
   .alpha(0.5)
   .lighten(20)
