@@ -1,8 +1,20 @@
-var assert = require("assert");
-var hsla   = require("../");
+var assert       = require("assert");
+var hsla         = require("../");
+var path         = require("path");
+var readmeTester = require("readme-tester");
 
 
 describe("hsla", function() {
+
+  describe("README", function () {
+    it("should work", function(done) {
+      readmeTester(path.resolve(__dirname, "../"), function(err) {
+        assert.ifError(err);
+        done();
+      });
+    });
+  });
+
   describe("initialize", function() {
     it("should initialize with no params", function() {
       assert.equal(hsla().toString(), "hsla(0, 100%, 50%, 1)");
