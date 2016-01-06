@@ -1,0 +1,10 @@
+{
+  "name": "hsla",
+  "version": "0.0.0",
+  "scripts": {
+    "test": "mocha test/index.js"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.4"
+  }
+}
