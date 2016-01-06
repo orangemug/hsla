@@ -1,7 +1,7 @@
 # hsla
 A really simple immutable hsla manipulation library
 
-[![stability-unstable](https://img.shields.io/badge/stability-unstable-green.svg)][stability]
+[![stability-unstable](https://img.shields.io/badge/stability-unstable-yellow.svg)][stability]
 [![circleci](https://circleci.com/gh/orangemug/hsla.png?style=shield)][circleci]
 [![Dependency Status](https://david-dm.org/orangemug/hsla.svg)][dm-prod]
 [![Dev Dependency Status](https://david-dm.org/orangemug/hsla/dev-status.svg)][dm-dev]
