@@ -1,12 +1,12 @@
 # hsla
 A really simple immutable hsla manipulation library
 
-[![stability-wip](https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg)][stability]
+[![stability-unstable](https://img.shields.io/badge/stability-unstable-green.svg)][stability]
 [![circleci](https://circleci.com/gh/orangemug/hsla.png?style=shield)][circleci]
 [![Dependency Status](https://david-dm.org/orangemug/hsla.svg)][dm-prod]
 [![Dev Dependency Status](https://david-dm.org/orangemug/hsla/dev-status.svg)][dm-dev]
 
-[stability]: https://github.com/orangemug/stability-badges#work-in-progress
+[stability]: https://github.com/orangemug/stability-badges#unstable
 [circleci]:  https://circleci.com/gh/orangemug/hsla
 [dm-prod]:   https://david-dm.org/orangemug/hsla
 [dm-dev]:    https://david-dm.org/orangemug/hsla#info=devDependencies
@@ -23,21 +23,21 @@ The API provides
 
 Chainable functions
 
-    lighten
-    darken
-    saturate
-    desaturate
-    alpha
-    rotate
-    clone
+    lighten(int:percent)
+    darken(int:percent)
+    saturate(int:percent)
+    desaturate(int:percent)
+    alpha(Number:alpha)
+    rotate(int:degrees)
+    clone()
 
 Chain ending functions
 
-    triadic
-    analogous
-    opposite
-    toString
-    toJSON
+    triadic(int:degreesOfSpread)
+    analogous(int:degreesOfSpread)
+    opposite()
+    toString()
+    toJSON()
 
 
 ## Examples
