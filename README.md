@@ -43,12 +43,12 @@ Chain ending functions
 ## Examples
 
 ```js
-    var color = hsla(120, 100, 50, 1) // green;
-      .alpha(0.5)
-      .lighten(20)
-      .toString()
+var color = hsla(120, 100, 50, 1) // green;
+  .alpha(0.5)
+  .lighten(20)
+  .toString()
 
-    assert.equal(color.toString(), "hsla(120, 100%, 70%, 0.5)");
+assert.equal(color.toString(), "hsla(120, 100%, 70%, 0.5)");
 ```
 
 
