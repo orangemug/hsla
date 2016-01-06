@@ -52,6 +52,10 @@ assert.equal(color.toString(), "hsla(120, 100%, 70%, 0.5)");
 ```
 
 
+## Why HSL?
+Read <http://www.useragentman.com/blog/2010/08/28/coding-colors-easily-using-css3-hsl-notation/> to find out more
+
+
 ## Test
 To test run
 
