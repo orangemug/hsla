@@ -69,7 +69,8 @@ var hsla = function(hue, saturation, lightness, alpha) {
       return hsla(hue, _saturation, lightness, alpha);
     },
     rotate: function(degrees) {
-      var _hue = (hue - degrees) % 360;
+      var _hue = (hue + degrees) % 360;
+      if(_hue < 0) _hue = 360 + _hue;
       return hsla(_hue, saturation, lightness, alpha);
     },
     triadic: function(degrees) {
@@ -78,9 +79,9 @@ var hsla = function(hue, saturation, lightness, alpha) {
 
       var opposite = this.opposite();
       return [
-        opposite.rotate(-30),
+        opposite.rotate(-degrees),
         this.clone(),
-        opposite.rotate(+30)
+        opposite.rotate(+degrees)
       ];
     },
     analogous: function(degrees) {
