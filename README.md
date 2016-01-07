@@ -50,7 +50,7 @@ var color = hsla(120, 100, 50, 1) // green;
   .lighten(20)
   .toString()
 
-assert.equal(color.toString(), "hsla(120, 100%, 70%, 0.5)");
+assert.equal(color, "hsla(120, 100%, 70%, 0.5)");
 ```
 
 
