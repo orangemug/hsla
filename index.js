@@ -187,7 +187,13 @@ Hsla.prototype = {
    * @return {Object}
    */
   toJSON: function() {
-    return Object.assign({}, this._c);
+    var c = this._c;
+    return {
+      hue:        c.hue,
+      saturation: c.saturation,
+      lightness:  c.lightness,
+      alpha:      c.alpha
+    }
   }
 }
 
