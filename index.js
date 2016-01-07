@@ -32,19 +32,20 @@ function clamp(value, min, max) {
   }
 }
 
-
 function Hsla(hue, saturation, lightness, alpha) {
-  // Set defaults
-  this._hue        = defaults(hue, 0);
-  this._saturation = defaults(saturation, 100);
-  this._lightness  = defaults(lightness, 50);
-  this._alpha      = defaults(alpha, 1);
-
-  // Make sure in clamps
-  this._hue        = Math.round(clamp(this._hue,        0, 360));
-  this._saturation = Math.round(clamp(this._saturation, 0, 100));
-  this._lightness  = Math.round(clamp(this._lightness,  0, 100));
-  this._alpha      = clamp(this._alpha, 0, 1);
+  // Set defaults and validate
+  this._c = {
+    hue: Math.round(
+      clamp(defaults(hue, 0), 0, 360)
+    ),
+    saturation: Math.round(
+      clamp(defaults(saturation, 100), 0, 100)
+    ),
+    lightness: Math.round(
+      clamp(defaults(lightness, 50), 0, 100)
+    ),
+    alpha: clamp(defaults(alpha, 1), 0, 1)
+  };
 }
 
 Hsla.prototype = {
@@ -54,32 +55,39 @@ Hsla.prototype = {
    * @return {Hsla}
    */
   alpha: function(newAlpha) {
-    return new Hsla(this._hue, this._saturation, this._lightness, newAlpha);
+    var c = this._c;
+    return new Hsla(c.hue, c.saturation, c.lightness, newAlpha);
   },
   lighten: function(percent) {
-    var _lightness = this._lightness + percent;
-    return new Hsla(this._hue, this._saturation, _lightness, this._alpha);
+    var c = this._c;
+    var _lightness = c.lightness + percent;
+    return new Hsla(c.hue, c.saturation, _lightness, c.alpha);
   },
   darken: function(percent) {
-    var _lightness = this._lightness - percent;
-    return new Hsla(this._hue, this._saturation, _lightness, this._alpha);
+    var c = this._c;
+    var _lightness = c.lightness - percent;
+    return new Hsla(c.hue, c.saturation, _lightness, c.alpha);
   },
   saturate: function(percent) {
-    var _saturation = this._saturation + percent;
-    return new Hsla(this._hue, _saturation, this._lightness, this._alpha);
+    var c = this._c;
+    var _saturation = c.saturation + percent;
+    return new Hsla(c.hue, _saturation, c.lightness, c.alpha);
   },
   desaturate: function(percent) {
-    var _saturation = this._saturation - percent;
-    return new Hsla(this._hue, _saturation, this._lightness, this._alpha);
+    var c = this._c;
+    var _saturation = c.saturation - percent;
+    return new Hsla(c.hue, _saturation, c.lightness, c.alpha);
   },
   rotate: function(degrees) {
-    var _hue = (this._hue + degrees) % 360;
+    var c = this._c;
+    var _hue = (c.hue + degrees) % 360;
     if(_hue < 0) _hue = 360 + _hue;
-    return new Hsla(_hue, this._saturation, this._lightness, this._alpha);
+    return new Hsla(_hue, c.saturation, c.lightness, c.alpha);
   },
   triadic: function(degrees) {
-    degrees = defaults(degrees, 60);
-    degrees = clamp(degrees, 0, 60);
+    degrees = clamp(
+      defaults(degrees, 60), 0, 60
+    );
 
     var opposite = this.opposite();
     return [
@@ -89,8 +97,9 @@ Hsla.prototype = {
     ];
   },
   analogous: function(degrees) {
-    degrees = defaults(degrees, 15);
-    degrees = clamp(degrees, 0, 120);
+    degrees = clamp(
+      defaults(degrees, 15), 0, 120
+    );
 
     return [
       this.rotate(-degrees),
@@ -102,26 +111,23 @@ Hsla.prototype = {
     return this.rotate(180);
   },
   clone: function() {
-    return new Hsla(this._hue, this._saturation, this._lightness, this._alpha);
+    var c = this._c;
+    return new Hsla(c.hue, c.saturation, c.lightness, c.alpha);
   },
   toString: function() {
+    var c = this._c;
     return "hsla("
-      +this._hue
+      +c.hue
       +", "
-      +this._saturation+"%"
+      +c.saturation+"%"
       +", "
-      +this._lightness+"%"
+      +c.lightness+"%"
       +", "
-      +this._alpha
+      +c.alpha
       +")";
   },
   toJSON: function() {
-    return {
-      hue:        this._hue,
-      saturation: this._saturation,
-      lightness:  this._lightness,
-      alpha:      this._alpha
-    };
+    return Object.assign({}, this._c);
   }
 }
 
