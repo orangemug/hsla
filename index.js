@@ -32,6 +32,13 @@ function clamp(value, min, max) {
   }
 }
 
+/**
+ * Creates a new Hsla
+ * @param {Integer} hue
+ * @param {Integer} saturation
+ * @param {Integer} lightness
+ * @param {Float} alpha
+ */
 function Hsla(hue, saturation, lightness, alpha) {
   // Set defaults and validate
   this._c = {
@@ -51,39 +58,70 @@ function Hsla(hue, saturation, lightness, alpha) {
 Hsla.prototype = {
   /**
    * Set alpha of hsla
-   * @param {Float} _alpha
+   * @param {Float} alpha
    * @return {Hsla}
    */
-  alpha: function(newAlpha) {
+  alpha: function(alpha) {
     var c = this._c;
-    return new Hsla(c.hue, c.saturation, c.lightness, newAlpha);
+    return new Hsla(c.hue, c.saturation, c.lightness, alpha);
   },
+  /**
+   * Lighten by percent
+   * @param {Integer} percent
+   * @return {Hsla}
+   */
   lighten: function(percent) {
     var c = this._c;
     var _lightness = c.lightness + percent;
     return new Hsla(c.hue, c.saturation, _lightness, c.alpha);
   },
+  /**
+   * Darken by percent
+   * @param {Integer} percent
+   * @return {Hsla}
+   */
   darken: function(percent) {
     var c = this._c;
     var _lightness = c.lightness - percent;
     return new Hsla(c.hue, c.saturation, _lightness, c.alpha);
   },
+  /**
+   * Saturate by percent
+   * @param {Integer} percent
+   * @return {Hsla}
+   */
   saturate: function(percent) {
     var c = this._c;
     var _saturation = c.saturation + percent;
     return new Hsla(c.hue, _saturation, c.lightness, c.alpha);
   },
+  /**
+   * Deaturate by percent
+   * @param {Integer} percent
+   * @return {Hsla}
+   */
   desaturate: function(percent) {
     var c = this._c;
     var _saturation = c.saturation - percent;
     return new Hsla(c.hue, _saturation, c.lightness, c.alpha);
   },
+  /**
+   * Rotate `hue` by `degrees`, note the rotation will wrap around 360 degrees
+   * @param {Integer} degrees
+   * @return {Hsla}
+   */
   rotate: function(degrees) {
     var c = this._c;
     var _hue = (c.hue + degrees) % 360;
     if(_hue < 0) _hue = 360 + _hue;
     return new Hsla(_hue, c.saturation, c.lightness, c.alpha);
   },
+  /**
+   * Calculate a color triad @see <http://www.tigercolor.com/color-lab/color-theory/color-harmonies.htm>
+   * Changing `degrees` will alter the spread somewhat like <http://paletton.com/>
+   * @param {Integer} percent
+   * @return {Hsla}
+   */
   triadic: function(degrees) {
     degrees = clamp(
       defaults(degrees, 60), 0, 60
@@ -96,6 +134,12 @@ Hsla.prototype = {
       opposite.rotate(+degrees)
     ];
   },
+  /**
+   * Calculate a analogous color scheme (<@see http://www.tigercolor.com/color-lab/color-theory/color-harmonies.htm>
+   * Changing `degrees` will alter the spread somewhat like <http://paletton.com/>
+   * @param {Integer} percent
+   * @return {Hsla}
+   */
   analogous: function(degrees) {
     degrees = clamp(
       defaults(degrees, 15), 0, 120
@@ -107,13 +151,25 @@ Hsla.prototype = {
       this.rotate(+degrees)
     ];
   },
+  /**
+   * A shorthand for rotating by 180deg
+   * @return {Hsla}
+   */
   opposite: function() {
     return this.rotate(180);
   },
+  /**
+   * Clone the object
+   * @return {Hsla}
+   */
   clone: function() {
     var c = this._c;
     return new Hsla(c.hue, c.saturation, c.lightness, c.alpha);
   },
+  /**
+   * Return a string in the format 'hsla(:hue, :saturation%, :lightness%, :alpha)'
+   * @return {String}
+   */
   toString: function() {
     var c = this._c;
     return "hsla("
@@ -126,6 +182,10 @@ Hsla.prototype = {
       +c.alpha
       +")";
   },
+  /**
+   * Return a plain javascript object describing the color
+   * @return {Object}
+   */
   toJSON: function() {
     return Object.assign({}, this._c);
   }
@@ -133,10 +193,13 @@ Hsla.prototype = {
 
 
 /**
- * Export as a single function.
+ * Creates a new Hsla instance
+ * @param {Integer} hue
+ * @param {Integer} saturation
+ * @param {Integer} lightness
+ * @param {Float} alpha
+ * @return {Hsla}
  */
-var hsla = function(hue, saturation, lightness, alpha) {
+module.exports = function(hue, saturation, lightness, alpha) {
   return new Hsla(hue, saturation, lightness, alpha);
 }
-
-module.exports = hsla;
